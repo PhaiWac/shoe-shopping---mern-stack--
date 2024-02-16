@@ -57,18 +57,25 @@ router.patch('/product',upload.single('file'),async ( req ,res, next) => {
 
 // User ;
 router.post('/register',async (req,res,next) => {
-    const { email , username , password , phone , address } = req.body ;
+    const { email , username  , password , phone , address } = req.body ;
 
-    const Register = new User({
-        email : email ,
-        username: username ,
-        password: crypto.Encode(password,'Project'),
-        phone: phone,
-        address: String(address),
-        cost: 0 
-    })
 
-    await Register.save() ;
+    try {
+        const Register = new User({
+            email : email ,
+            username: username ,
+            password: crypto.Encode(password,'Project'),
+            phone: phone,
+            address: String(address),
+            cost: 0 
+        })
+    
+        await Register.save() ;
+
+        res.status(201).json()
+    } catch (err) {
+        res.status(207).json();
+    }   
     
     next() ;
 })
@@ -78,8 +85,10 @@ router.post('/login',async ( req ,res ,next) => {
     
     const user = await User.findOne({ email : email}).exec() ;
 
+    if (!user) return res.status(204).json() ;
+
     if ( crypto.Decode(user.password,"Project") != password ) {
-        return res.json('password not corret')
+        return res.status(204).json() ;
     }
     
     if (!req.cookies.jwt) {
@@ -87,7 +96,9 @@ router.post('/login',async ( req ,res ,next) => {
         res.cookie('jwt',token) ;
     } ;
 
-    res.json('Logged') ;
+    console.log('logged'); 
+
+    res.status(201).json(user);
 })
 
 router.post('/logout',(req,res,next) => {
@@ -97,7 +108,7 @@ router.post('/logout',(req,res,next) => {
 })
 
 router.get('/user',(req,res,next) => {
-
+   res.json('work user')
 })
 
 module.exports = router ;

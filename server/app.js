@@ -15,7 +15,7 @@ app.use(cookieParser()) ;
 app.use(async (req,res,next) => {
     const uri = 'mongodb+srv://phai:123@endproject.pmadhqg.mongodb.net/project';
     await mongoose.connect(uri);
-    console.log('connected')
+    // console.log('connected')
     next() ;
 })
 

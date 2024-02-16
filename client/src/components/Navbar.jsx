@@ -10,16 +10,31 @@ function Navbar() {
     const navbar = useSelector((state) => state.navbar) ;
 
     const [usePath , setPath] = useState('/') ;
+    const [theme , setTheme] = useState('') ; 
 
-    useEffect(() => {
+    useEffect(() => {   
         setPath(window.location.pathname) ;  
-           
+        const theme = localStorage.getItem('Theme') ;
+        if (theme) {
+            setTheme(theme)
+            document.querySelector('html').setAttribute('data-theme', theme);
+        } else {
+            setTheme('light') ;
+            localStorage.setItem('Theme','light')
+            document.querySelector('html').setAttribute('data-theme', 'light');
+        }
     },[]);
 
     const Update = useCallback(() => {
         setPath(window.location.pathname) ;
     },[])
 
+    const SetTheme = useCallback(() => {
+        const newTheme = theme == 'light' ? 'dark' : 'light' ;
+        setTheme(newTheme) ;
+        localStorage.setItem('Theme',newTheme)
+        document.querySelector('html').setAttribute('data-theme', newTheme);
+    },[theme])
 
 
     return (
@@ -42,10 +57,40 @@ function Navbar() {
                         <li><Link className='btn btn-ghost font-normal'>Contact</Link></li>
                     </ul>
                     
-                    <div className="indicator ms-auto my-auto hidden md:block">
-                        <span className='indicator-item badge p-3'>2</span>
-                        <button className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></button>
+                    <div className="hidden my-auto ms-auto md:flex"> 
+                        <button className="btn btn-ghost text-2xl" onClick={SetTheme}>
+                            <Icon icon="fluent:dark-theme-20-filled" />
+                        </button>
+                        <div className="indicator">
+                            <span className='indicator-item badge p-3'>2</span>
+                            <button className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></button>    
+                        </div>
+                        {navbar.userdata ? (
+                            <>
+                            <div className="tooltip dropdown dropdown-hover" data-tip="admin@gmail.com">
+                                <button tabIndex={1} className="btn btn-ghost text-2xl" >
+                                    <Icon icon="iconamoon:profile-circle-fill" />   
+                                </button>
+                                <ul tabIndex={1} className="dropdown-content z-[1] menu p-2 bg-base-100 rounded-box w-52 shadow">
+                                    { navbar.userdata && navbar.userdata.email == "admin@gmail.com" && (
+                                        <>
+                                            <li><Link>จัดการเว็ปไซต์</Link></li>
+                                        </>
+                                    )}
+                                    <li><Link>ข้อมูลส่วนตัว</Link></li>
+                                    <li><Link>ประวัติการซื้อ</Link></li>
+                                    <li><Link>เติมเงิน</Link></li>
+                                    <li><Link>ออกจากระบบ</Link></li>
+                                </ul>
+                            </div>
+                            </>
+                        ) : (
+                            <>
+                                <Link to={'/login'} className="btn btn-ghost">Login</Link>
+                            </>
+                        )}
                     </div>
+ 
 
                     {/* Mobile */}
 
@@ -70,8 +115,14 @@ function Navbar() {
                                 <hr className='shadow-lg mb-5'/>
 
                                 <li onClick={Update} className={usePath == '/' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/'} >หน้าแรก</Link></li>
-                                <li onClick={Update} className={usePath == '/products' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/products'}>สินต้าทั้งหมด</Link></li>
+                                <li onClick={Update} className={usePath == '/products' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/products'}>สินค้าทั้งหมด</Link></li>
                                 <li onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>เติมเงิน</Link></li>
+
+                                { navbar.userdata != null && (
+                                    <>
+                                       <li  onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>สินค้าของคุณ</Link></li>
+                                    </>
+                                )}
 
                                 <hr className='shadow-lg mb-5'/>
 
