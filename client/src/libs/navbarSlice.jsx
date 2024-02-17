@@ -1,7 +1,7 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
 
 const navbar = createSlice({
-  name: 'counter',
+  name: 'navbar',
   initialState: {
     using : '/' ,
     userdata: null, 
@@ -11,7 +11,7 @@ const navbar = createSlice({
         state.using = actions.payload ;
     },
     setUserData : (state , actions) => {
-        state.userdata = actions.payload; 
+        state.userdata = actions.payload;
     }
   }
 })

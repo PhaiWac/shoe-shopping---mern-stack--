@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
@@ -12,7 +12,23 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
+import { useGetUserQuery } from './service/navbar';
+
+import { useDispatch } from 'react-redux';
+import { setUserData } from './libs/navbarSlice';
+import Adminpanel from './pages/Adminpanel';
+import Product from './pages/Product';
+
 function App() {
+
+  const {data , error , isLoading} = useGetUserQuery();
+  const dispatch = useDispatch() ;
+
+  useEffect(() => {
+    if (data) {
+      dispatch(setUserData(data)) ;
+    } 
+  },[data])
 
   return (
     <>
@@ -34,6 +50,11 @@ function App() {
         <Route path='/' element = {<Home/>} />
         <Route path='/login' element = {<Login/>} />
         <Route path='/register' element = {<Register/>} />
+        <Route path='/home' element = {<Home/>}/>
+
+        {/* Admin  */}
+        <Route path='/admin' element = {<Adminpanel/>}/>
+        <Route path='/admin/product' element = {<Product/>}/>
       </Routes>
     </>
   )

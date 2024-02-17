@@ -33,26 +33,37 @@ router.post('/product',upload.single('file'),async ( req ,res,next) => {
 
 })
 
-router.delete('/product',async ( req, res, next ) => {
-    const { _id } = req.params ;
+router.delete('/product/:id',async ( req, res, next ) => {
+    console.log('deleteing')
+    const { id } = req.params ;
 
-    const product = await Product.findById(_id) ;
+    await Product.findOneAndDelete({_id : id}) ;
 
-    console.log(product) ;
+    res.status(201).json()
+
+    next()
 })
 
-router.patch('/product',upload.single('file'),async ( req ,res, next) => {
-    const data = [] ;
-    const { _id } = req.params ;
-    
-    for ( const key in req.body) {
-        const value = req.body[key] ;
-        if (value.length <= 0 ) continue ;
-        data[key] = value ;
+router.patch('/product/:id',upload.single('file'),async ( req ,res, next) => {
+    const { id } = req.params ;
+
+
+    if (req.file) {
+        req.body.file = req.file.filename ;
     } ;
 
-    await Product.findByIdAndUpdate(_id,data) ;
+    const  data = req.body ;
+    console.log(data)
+    const ew =  await Product.findByIdAndUpdate(id,data) ;
 
+    // console.log(ew) ;
+   
+
+})
+
+router.get('/product',async ( req, res ,next) => {
+    const product = await Product.find() ;
+    res.json(product) ;
 })
 
 // User ;
@@ -107,8 +118,21 @@ router.post('/logout',(req,res,next) => {
     next() ;
 })
 
-router.get('/user',(req,res,next) => {
-   res.json('work user')
+router.get('/user',async (req,res,next) => {
+    const token = req.cookies.jwt ;
+
+    if (!token) return res.status(207).json() ;
+
+    const data = jwt.verify(token,'Project') ;
+    const user = await User.findOne({email : data.email}) ;
+
+    if (user) {
+        return res.status(201).json(user) ;
+    } else {
+        return res.status(207).json() ;
+    }
+    next()
 })
+
 
 module.exports = router ;

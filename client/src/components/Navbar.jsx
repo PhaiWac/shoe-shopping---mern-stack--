@@ -4,13 +4,17 @@ import { Icon } from '@iconify-icon/react';
 
 import { useSelector, useDispatch } from 'react-redux'
 import { setUsing , setUserData } from '../libs/navbarSlice';
+import axios from 'axios';
 
 function Navbar() {
 
     const navbar = useSelector((state) => state.navbar) ;
+    const dispatch = useDispatch() ;
 
     const [usePath , setPath] = useState('/') ;
     const [theme , setTheme] = useState('') ; 
+
+    // const navigate = useNavigate();
 
     useEffect(() => {   
         setPath(window.location.pathname) ;  
@@ -36,9 +40,14 @@ function Navbar() {
         document.querySelector('html').setAttribute('data-theme', newTheme);
     },[theme])
 
+    const Logout = useCallback(async () => {
+        await axios.post('/api/logout')
+        dispatch(setUserData(null))
+    },[])
 
     return (
         <>
+
             <p className='text-center bg-primary text-white font-bold p-3'>ร้านขายรองเท้า !!</p>
             <div className="w-full shadow-xl bg-base-100 p-3">
                 <div className="container mx-auto flex justify-between">
@@ -46,7 +55,7 @@ function Navbar() {
                     
                     <ul className='menu menu-horizontal hidden md:flex'>
                         <li className='dropdown dropdown-hover  '>
-                            <Link tabIndex={0} className='btn btn-ghost font-normal'>Home</Link>
+                            <Link tabIndex={0} to={'/home'} className='btn btn-ghost font-normal'>Home</Link>
                             <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
                                 <li><Link>Products</Link></li>
                                 <li><Link>Converse</Link></li>
@@ -67,20 +76,20 @@ function Navbar() {
                         </div>
                         {navbar.userdata ? (
                             <>
-                            <div className="tooltip dropdown dropdown-hover" data-tip="admin@gmail.com">
+                            <div className="tooltip dropdown dropdown-end  dropdown-hover" data-tip="admin@gmail.com">
                                 <button tabIndex={1} className="btn btn-ghost text-2xl" >
                                     <Icon icon="iconamoon:profile-circle-fill" />   
                                 </button>
                                 <ul tabIndex={1} className="dropdown-content z-[1] menu p-2 bg-base-100 rounded-box w-52 shadow">
                                     { navbar.userdata && navbar.userdata.email == "admin@gmail.com" && (
                                         <>
-                                            <li><Link>จัดการเว็ปไซต์</Link></li>
+                                            <li><Link to={'/admin'}>จัดการเว็ปไซต์</Link></li>
                                         </>
                                     )}
                                     <li><Link>ข้อมูลส่วนตัว</Link></li>
                                     <li><Link>ประวัติการซื้อ</Link></li>
                                     <li><Link>เติมเงิน</Link></li>
-                                    <li><Link>ออกจากระบบ</Link></li>
+                                    <li><button  onClick={Logout}>ออกจากระบบ</button></li>
                                 </ul>
                             </div>
                             </>
