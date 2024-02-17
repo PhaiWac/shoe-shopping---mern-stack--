@@ -18,6 +18,13 @@ const UserSchema = new Schema({
             count: Number ,
             bought: Date 
         }
+    ],
+    orders: [
+        {
+            ordername: String ,
+            price: Number ,
+            count: Number
+        }
     ]
 })
 

@@ -8,7 +8,7 @@ import Products from '../components/Products'
 function Home() {
   return (
     <>
-        <Poppular/>
+        {/* <Poppular/> */}
         <Hero/>
         <Products/>
     </>

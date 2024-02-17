@@ -12,16 +12,17 @@ import { ToastContainer, toast } from 'react-toastify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useGetUserQuery } from './service/navbar';
+import { useAuthUserQuery } from './service/useapi';
 
 import { useDispatch } from 'react-redux';
 import { setUserData } from './libs/navbarSlice';
 import Adminpanel from './pages/Adminpanel';
 import Product from './pages/Product';
+import Users from './pages/Users';
 
 function App() {
 
-  const {data , error , isLoading} = useGetUserQuery();
+  const {data , error , isLoading} = useAuthUserQuery();
   const dispatch = useDispatch() ;
 
   useEffect(() => {
@@ -55,6 +56,7 @@ function App() {
         {/* Admin  */}
         <Route path='/admin' element = {<Adminpanel/>}/>
         <Route path='/admin/product' element = {<Product/>}/>
+        <Route path='/admin/users' element = {<Users/>}/>
       </Routes>
     </>
   )

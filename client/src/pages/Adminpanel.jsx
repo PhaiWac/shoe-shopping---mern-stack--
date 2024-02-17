@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 
 function Adminpanel() {
     const List = [
-        {name : 'จัดการผู้ใช้' , link : '/configuser'} , 
+        {name : 'จัดการผู้ใช้' , link : '/users'} , 
         {name : 'จัดการสินค้า' , link : '/product'} , 
     ]
   return (

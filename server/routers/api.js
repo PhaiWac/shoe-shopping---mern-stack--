@@ -131,8 +131,50 @@ router.get('/user',async (req,res,next) => {
     } else {
         return res.status(207).json() ;
     }
-    next()
+
 })
 
+router.delete('/user/:id',async ( req , res ,next) => {
+    const {id } = req.params ;
+
+    await User.findByIdAndDelete(id) ;
+
+    res.status(201).json() ;
+
+    next() ;
+    
+})
+
+router.patch('/user/:id',async ( req, res ,next) => {
+    const {id} = req.params ;
+    
+    await User.findByIdAndUpdate(id,req.body) ;
+    
+    res.status(201).json() ;
+
+    next() ;
+})
+
+router.get('/users',async ( req, res, next) => {
+    const user = await User.find({ email: { $ne: 'admin@gmail.com' } }) ;
+
+    res.json(user) ;
+    next() ;
+})
+
+router.patch('/password/:id',async ( req , res, next) => {
+    const {id} = req.params ;
+
+    const user = await User.findById(id) ;
+
+    const {oldpassword , newpassword } = req.body ;
+
+    if ( crypto.Decode(user.password,'Project') !== oldpassword ) return res.status(207).json('รหัสผ่านไม่ถูกต้อง') ;
+
+    await User.findByIdAndUpdate(id,{password : crypto.Encode(newpassword,"Project")} ) ;
+
+    res.status(201).json() ;
+    next() ;
+})
 
 module.exports = router ;

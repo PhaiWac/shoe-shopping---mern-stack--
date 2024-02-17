@@ -11,7 +11,6 @@ function Datatable() {
 
     if (isLoading) return <p>loadding</p>
 
-    
     const handleDelete = async (id) => {
        await axios.delete(`/api/product/${id}`)
     } 

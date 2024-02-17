@@ -17,12 +17,12 @@ function Products() {
                 <div className="grid grid-cols-2 md:flex md:flex-wrap  gap-5">
                     {data.map((items) => (
                         <React.Fragment key={items._id} >
-                            <div className="card bg-base-100 shadow-xl md:w-56 ">
+                            <div className="card bg-base-100 shadow-2xl md:w-64 ">
                                 <figure><img src= {`/image/${items.img}`} alt="Shoes" className='w-[80%]' /></figure>
                                 <div className="card-body">
                                     <h2 className="card-title font-bold">
                                         {items.name}
-                                        {/* <div className="badge badge-secondary">NEW</div> */}
+                                        <div className={items.count <=0 ? 'badge badge-error text-white' : 'badge badge-secondary'}>{items.count <= 0 ? 'หมด' : items.count}</div>
                                     </h2>
                                     <p>{items.description}</p>
                                     <div className="card-actions justify-end">
