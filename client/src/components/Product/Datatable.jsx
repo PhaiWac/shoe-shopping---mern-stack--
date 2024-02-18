@@ -5,16 +5,20 @@ import ModalEditProduct from './ModalEditProduct';
 
 function Datatable() {
     const { data, error, isLoading, isFetching, refetch } = useGetDataProductQuery({},{
-        pollingInterval: 1000,
-        skipPollingIfUnfocused: true,
+        pollingInterval : 1000,
     })
-
-    if (isLoading) return <p>loadding</p>
 
     const handleDelete = async (id) => {
        await axios.delete(`/api/product/${id}`)
+       .then(res => {
+            if (res.status == 201) {
+                console.log('fetch')
+                refetch()
+            }
+       })
     } 
 
+    if (isLoading ) return <p className='text-xl text-center'>กำลังโหลดข้อมูล</p>
 
     return (
         <>

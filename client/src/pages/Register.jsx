@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Link  } from 'react-router-dom'
+import { Link, useNavigate  } from 'react-router-dom'
 import { Icon } from '@iconify-icon/react';
 import axios from 'axios' ;
 
@@ -7,7 +7,7 @@ import {  toast } from 'react-toastify';
 
 function Register() {
 
-
+    const navitgate = useNavigate() ;
 
     const [value , setValue] = useState({
         email : '' ,
@@ -36,10 +36,11 @@ function Register() {
         try {
             const res = await axios.post('/api/register',value,{withCredentials : true});
 
+            console.log(res.status)
             if (res.status == 207) {
                 setAlert('อีเมลนี้มีผู้ใชงานแล้ว')
             } else {
-                window.location.href = '/login'
+                navitgate('/login')
             }
         } catch (err) {
             console.log("Register Error ",err)

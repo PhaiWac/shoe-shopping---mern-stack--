@@ -1,13 +1,17 @@
-import React, { useEffect } from 'react'
 import UserDatatable from '../components/User/UserDatatable'
 
-import { useGetUserQuery } from '../service/useapi';
-
-import { useDispatch } from 'react-redux';
-import { setUserData } from '../libs/userSlice';
+import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 function Users() {
-
+  // const navbar = useSelector((state) => state.navbar);
+  // const native = useNavigate()
+  // useEffect(() => {
+  //     if (!navbar.userdata) {
+  //         native('/login')
+  //     }
+  //  },[])
 
 
   return (

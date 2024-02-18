@@ -1,9 +1,18 @@
-import React from 'react'
 import Datatable from '../components/Product/Datatable';
 import ModalAddProduct from '../components/Product/ModalAddProduct';
-
+import { Link, useNavigate } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 
 function Product() {
+  // const navbar = useSelector((state) => state.navbar);
+  // const native = useNavigate()
+  // useEffect(() => {
+  //     if (!navbar.userdata) {
+  //         native('/login')
+  //     }
+  //  },[])
+
   return (
     <>
         <div className="container mt-12 mx-auto">

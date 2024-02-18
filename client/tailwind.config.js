@@ -17,8 +17,10 @@ export default {
         dark: {
           ...require('daisyui/src/theming/themes')['dark'],
           // primary : '#4169E1'
-        }
+        },
       },
+      "coffee",
+      "business"
     ],
   },
 }

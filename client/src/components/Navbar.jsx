@@ -17,6 +17,10 @@ function Navbar() {
 
     // const navigate = useNavigate();
 
+    // useEffect(() => {
+    //     if 
+    // },[navbar])
+
     useEffect(() => {
         setPath(window.location.pathname);
         const theme = localStorage.getItem('Theme');
@@ -28,6 +32,7 @@ function Navbar() {
             localStorage.setItem('Theme', 'light')
             document.querySelector('html').setAttribute('data-theme', 'light');
         }
+
     }, []);
 
     const Update = useCallback(() => {
@@ -73,7 +78,7 @@ function Navbar() {
                         </button>
                         {navbar.userdata ? (
                             <>
-                                <ModalEditProfile id = {navbar.userdata._id} data = {navbar.userdata}/>
+                                <ModalEditProfile id={navbar.userdata._id} data={navbar.userdata} />
                                 <div className="indicator">
                                     <span className='indicator-item badge p-3'>{navbar.userdata.orders.length}</span>
                                     <Link to={'/shopping'} className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></Link>
@@ -94,7 +99,7 @@ function Navbar() {
                                             </label>
                                         </li>
                                         <li><Link to={'/history'}>ประวัติการซื้อ</Link></li>
-                                        <li><Link>เติมเงิน</Link></li>
+                                        {/* <li><Link>เติมเงิน</Link></li> */}
                                         <li><button onClick={Logout}>ออกจากระบบ</button></li>
                                     </ul>
                                 </div>
@@ -123,26 +128,37 @@ function Navbar() {
                             <ul className="menu p-4 w-80 min-h-full bg-base-200 text-base-content">
 
                                 <div className="p-5 rounded-full w-16 h-16 bg-base-300 grid content-center glass">
-                                    <p className='text-4xl text-center  font-bold'>A</p>
+                                    <p className='text-4xl text-center font-bold'>{navbar.userdata && navbar.userdata.email.split("")[0].toUpperCase()}</p>
                                 </div>
 
-                                <p className='text-xl p-2'>Admin@gmail.com</p>
+                                <p className='text-xl p-2'>{navbar.userdata && navbar.userdata.email}</p>
 
                                 <hr className='shadow-lg mb-5' />
 
                                 <li onClick={Update} className={usePath == '/' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/'} >หน้าแรก</Link></li>
-                                <li onClick={Update} className={usePath == '/products' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/products'}>สินค้าทั้งหมด</Link></li>
-                                <li onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>เติมเงิน</Link></li>
+                                {/* <li onClick={Update} className={usePath == '/products' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/products'}>สินค้าทั้งหมด</Link></li> */}
+                                {/* <li onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>เติมเงิน</Link></li> */}
 
                                 {navbar.userdata != null && (
                                     <>
-                                        <li onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>สินค้าของคุณ</Link></li>
+                                        <li onClick={Update} className={usePath == '/shopping' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/shopping'}>ตระกร้า</Link></li>
+                                        <li onClick={Update} className={usePath == '/history' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/history'}>ประวัติการซื้อ</Link></li>
+                                        <li onClick={Update} className={usePath == '/editprofile' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/editprofile'}>ข้อมูลส่วนตัว</Link></li>
+                                        {navbar.userdata.email == 'admin@gmail.com' && (
+                                            <li onClick={Update} className={usePath == '/admin' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/admin'}>จัดการเว็ปไซต์</Link></li>
+                                        )}
+                                        <li>
+                                            <button className="text-xl" onClick={SetTheme}>
+                                                {theme == 'light' ? 'โหมดมืด' : 'โหมดสว่าง'}
+                                            </button>
+                                        </li>
+                                        <li onClick={Logout} className='text-xl' ><p>ออกจากระบบ</p></li>
                                     </>
                                 )}
 
-                                <hr className='shadow-lg mb-5' />
+                                {/* <hr className='shadow-lg mb-5' /> */}
 
-                                <li onClick={Update} className={usePath == '/contact' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/contact'}>ติดต่อเรา</Link></li>
+                                {/* <li onClick={Update} className={usePath == '/contact' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/contact'}>ติดต่อเรา</Link></li> */}
 
                                 {navbar.userdata == null && (
                                     <>

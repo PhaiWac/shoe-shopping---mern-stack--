@@ -150,7 +150,7 @@ router.post('/order/:id', async (req, res, next) => {
 
 // Product 
 router.post('/product',upload.single('file'),async ( req ,res,next) => {
-    const {name , price , description } = req.body ;
+    const {name , price , description ,count } = req.body ;
 
     let img = null ;
     if (req.file) {
@@ -163,12 +163,12 @@ router.post('/product',upload.single('file'),async ( req ,res,next) => {
         description: String(description) ,
         img: img ,
         sale: 0 ,
-        count: 0 
+        count: count 
     })
 
     await AddProduct.save() ;
 
-    res.json('Add Product Success') ;
+    res.status(200).json()
 
 })
 
@@ -208,6 +208,10 @@ router.get('/product',async ( req, res ,next) => {
 router.post('/register',async (req,res,next) => {
     const { email , username  , password , phone , address } = req.body ;
 
+    const check = await User.findOne({email : email}) ;
+    
+    if (check ) return res.status(207).json()
+
 
     try {
         const Register = new User({
@@ -221,12 +225,12 @@ router.post('/register',async (req,res,next) => {
     
         await Register.save() ;
 
-        res.status(201).json()
+       return  res.status(201).json()
     } catch (err) {
-        res.status(207).json();
+       return res.status(207).json();
     }   
     
-    next() ;
+    // next() ;
 })
 
 router.post('/login',async ( req ,res ,next) => {
@@ -294,7 +298,7 @@ router.patch('/user/:id',async ( req, res ,next) => {
 })
 
 router.get('/users',async ( req, res, next) => {
-    const user = await User.find({ email: { $ne: 'admin@gmail.com' } }) ;
+    const user = await User.find({ email: { $ne: "admin@gmail.com" } }) ;
 
     res.json(user) ;
     next() ;

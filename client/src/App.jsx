@@ -21,6 +21,7 @@ import Product from './pages/Product';
 import Users from './pages/Users';
 import Shopping from './pages/Shopping';
 import History from './pages/History';
+import Editprofile from './pages/Editprofile';
 
 function App() {
 
@@ -58,6 +59,7 @@ function App() {
         <Route path='/home' element = {<Home/>}/>
         <Route path='/shopping' element = {<Shopping/>}/>
         <Route path='/history' element = {<History/>}/>
+        <Route path='/editprofile' element = {<Editprofile/>}/>
         
 
 

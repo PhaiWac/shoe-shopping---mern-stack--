@@ -15,12 +15,18 @@ function Hero() {
   return (
     <div className="container p-5 mx-auto slider-container">
       <Slider {...settings}>
-        <div className='bg-red-100 h-24 md:h-96'>
-            <img src="https://img.freepik.com/free-vector/modern-sale-banner-with-text-space-area_1017-27331.jpg" className='object-cover w-full' />
+        <div className='h-24 md:h-96'>
+            <img src="/image/421493290_1379489012707657_9117900506802243751_n.png" className='object-cover w-full bg-no-repeat my-auto' />
         </div>
-        <div className='bg-red-200 h-24 md:h-96'>
-            <h3>2</h3>
+        
+        <div className='h-24 md:h-96'>
+            <img src="/image/423454434_358646157083767_3231056708648309276_n.png" className='object-cover w-full bg-no-repeat' />
         </div>
+        
+        <div className='h-24 md:h-96'>
+            <img src="/image/423454927_951800673138160_5098724931172533239_n.png" className='object-cover w-full bg-no-repeat' />
+        </div>
+        
     </Slider>
     </div>
   );

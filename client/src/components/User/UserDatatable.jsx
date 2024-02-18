@@ -28,7 +28,7 @@ function UserDatatable() {
     const handleDelete = async (id) => {
         if (window.confirm("คุณแน่ใจหรอว่าจะลบ")) {
             await axios.delete(`/api/user/${id}`) ;
-            refetch ;
+            refetch() ;
         }
 
     }

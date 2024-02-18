@@ -74,7 +74,7 @@ function Products() {
                     {data.map((items) => (
                         <React.Fragment key={items._id} >
                             <div className="card bg-base-100 shadow-2xl w-full md:w-[14rem] xl:w-64 ">
-                                <figure><img src={`/image/${items.img}`} alt="Shoes" className='w-[200px] h-[150px]' /></figure>
+                                <figure><img src={`/image/${items.img}`} alt="Shoes" className='w-full' /></figure>
                                 <div className="card-body">
                                     <h2 className="card-title font-bold">
                                         {items.name}
