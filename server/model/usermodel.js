@@ -14,6 +14,7 @@ const UserSchema = new Schema({
     history: [
         {
             productid :  mongoose.ObjectId,
+            productname: String,
             price: Number,
             count: Number ,
             bought: Date 
@@ -21,7 +22,8 @@ const UserSchema = new Schema({
     ],
     orders: [
         {
-            ordername: String ,
+            productid: mongoose.ObjectId ,
+            productname: String,
             price: Number ,
             count: Number
         }

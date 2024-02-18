@@ -103,7 +103,7 @@ function UserDatatable() {
 
     return (
         <>
-            <div className="container mx-auto mt-12">
+            <div className="container mx-auto mt-12 p-5 shadow-xl rounded-lg">
 
                 <div className="overflow-x-auto">
                     <table className="table">

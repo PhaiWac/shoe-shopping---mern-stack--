@@ -4,6 +4,7 @@ const mongoose = require('mongoose') ;
 const cors = require('cors') ;
 const bodyParser = require('body-parser') ;
 const cookieParser = require('cookie-parser') ;
+var session = require('express-session')
 
 app.use(cors())
 
@@ -23,8 +24,9 @@ app.listen(9999,() => {
     console.log('server start 9999') ;
 })
 
+const getData = require('./middleware/auth')
 
 const api = require('./routers/api') ;
 
 
-app.use('/api',api) ;
+app.use('/api',getData,api) ;

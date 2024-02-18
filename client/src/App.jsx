@@ -19,10 +19,14 @@ import { setUserData } from './libs/navbarSlice';
 import Adminpanel from './pages/Adminpanel';
 import Product from './pages/Product';
 import Users from './pages/Users';
+import Shopping from './pages/Shopping';
+import History from './pages/History';
 
 function App() {
 
-  const {data , error , isLoading} = useAuthUserQuery();
+  const {data , error , isLoading} = useAuthUserQuery({},{
+    pollingInterval: 1000 
+  });
   const dispatch = useDispatch() ;
 
   useEffect(() => {
@@ -52,6 +56,10 @@ function App() {
         <Route path='/login' element = {<Login/>} />
         <Route path='/register' element = {<Register/>} />
         <Route path='/home' element = {<Home/>}/>
+        <Route path='/shopping' element = {<Shopping/>}/>
+        <Route path='/history' element = {<History/>}/>
+        
+
 
         {/* Admin  */}
         <Route path='/admin' element = {<Adminpanel/>}/>

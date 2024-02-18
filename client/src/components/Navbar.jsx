@@ -64,7 +64,7 @@ function Navbar() {
                             </ul> */}
                         </li>
                         <li><Link className='btn btn-ghost font-normal '>Top Up</Link></li>
-                        <li><Link className='btn btn-ghost font-normal'>Contact</Link></li>
+                        {/* <li><Link className='btn btn-ghost font-normal'>Contact</Link></li> */}
                     </ul>
 
                     <div className="hidden my-auto ms-auto md:flex">
@@ -76,7 +76,7 @@ function Navbar() {
                                 <ModalEditProfile id = {navbar.userdata._id} data = {navbar.userdata}/>
                                 <div className="indicator">
                                     <span className='indicator-item badge p-3'>{navbar.userdata.orders.length}</span>
-                                    <button className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></button>
+                                    <Link to={'/shopping'} className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></Link>
                                 </div>
                                 <div className="tooltip dropdown dropdown-end  dropdown-hover" data-tip={navbar.userdata.email}>
                                     <button tabIndex={1} className="btn btn-ghost text-2xl" >
@@ -93,7 +93,7 @@ function Navbar() {
                                                 ข้อมูลส่วนตัว
                                             </label>
                                         </li>
-                                        <li><Link>ประวัติการซื้อ</Link></li>
+                                        <li><Link to={'/history'}>ประวัติการซื้อ</Link></li>
                                         <li><Link>เติมเงิน</Link></li>
                                         <li><button onClick={Logout}>ออกจากระบบ</button></li>
                                     </ul>

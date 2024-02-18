@@ -8,6 +8,145 @@ const Product = require('../model/productmodel')
 const jwt = require('jsonwebtoken')
 
 const upload = require('../help/multer') ;
+const { ObjectId } = require('mongodb');
+
+// History 
+router.get('/history',async ( req, res, next) => {
+    const user = await User.findById(req.userdata._id) ;
+    
+    res.json(user.history) ;
+})
+
+// Order
+const ChangeCount = async (id,count) => {
+    const product = await Product.findById(id) ;
+    
+    // console.log(product) ;
+
+    if ((product.count - count) < 0 ) return false; 
+    
+    // console.log(product.count - count)
+
+    const update = await Product.findByIdAndUpdate(id,{count  : product.count - count}) ;
+
+    return true ;
+} 
+
+router.post('/orders',async (req , res, next) => {
+    const { orders , _id , history} = req.userdata ;
+    const { total } = req.body; 
+
+    if (total <= 0 ) return res.status(207).json()
+
+    let update = history ;
+    
+    let errorcount = false;
+    const newHistory = orders.map(items => {
+        update = [...update,{
+            productid : items.productid ,
+            productname : items.productname ,
+            price : items.price ,
+            count : items.count ,
+            bought : Date.now().toString() 
+        }]
+        if (!ChangeCount(items.productid,items.count)) {
+            errorcount = true ;
+        } 
+    })
+
+    if (errorcount) return res.status(207).json({message : 'สินค้ามีไม่เพียงพอ'}) ;
+
+    await User.findByIdAndUpdate(_id,{history : update , orders : []   }) ;
+
+    res.status(200).json();
+})
+
+router.delete('/orders/:id',async ( req , res,next) => {
+    const {id} = req.params ;
+
+    const obid = new ObjectId(id) ;
+
+    const data = await User.findById(req.userdata._id) ;
+
+    let Neworder = data.orders.find(item => {
+        if (item.productid.toString() !== obid.toString()){
+            return item ;
+        } 
+    }) ; 
+
+
+
+    if (typeof Neworder != 'object' ) {
+        await User.findByIdAndUpdate(req.userdata._id,{orders : [] }) ;
+    } else {
+        await User.findByIdAndUpdate(req.userdata._id,{orders : [Neworder] }) ;
+    }
+
+
+
+    res.status(200).json() ;
+
+})
+
+router.get('/orders',async ( req , res ,next) => {
+    const token = req.cookies.jwt ;
+
+    const data = jwt.verify(token,'Project') ;
+    const user = await User.findOne({email : data.email}) ;
+    
+    res.json(user.orders)
+    
+    
+    next() ;
+})
+
+router.post('/order/:id', async (req, res, next) => {
+    try {
+        const { id } = req.params;
+        const { count, user } = req.body;
+
+        const product = await Product.findById(id);
+
+        if (count > product.count || count == 0) {
+            return res.status(207).json({ message: 'สินค้ามีจำนวนไม่เพียงพอ' });
+        }
+
+        const createOrder = {
+            productid: product._id,
+            productname: product.name,
+            price: product.price * count,
+            count: count
+        };
+
+        const getUser = await User.findById(user._id);
+
+        const isItemInOrders = getUser.orders.some(order => order.productid.toString() === product._id.toString());
+
+        if (!isItemInOrders) {
+            await User.findByIdAndUpdate(user._id, { orders: [...user.orders, createOrder] });
+        } else {
+            const getdataUser = getUser.orders.find(order => order.productid.toString() === product._id.toString());
+            await User.findByIdAndUpdate(user._id,
+                {
+                    $set: { 'orders.$[elem].count': getdataUser.count += count }
+                },
+                {
+                    arrayFilters: [
+                    { 'elem.productid': getdataUser.productid }
+                    ],
+                    new: true 
+                },
+            )
+        }
+
+        // await Product.findByIdAndUpdate(id,{count : product.count - count}) ;
+
+        res.status(200).json({ message: 'การสั่งซื้อสำเร็จ' });
+    } catch (error) {
+        next(error);
+    }
+});
+
 
 // Product 
 router.post('/product',upload.single('file'),async ( req ,res,next) => {
@@ -58,7 +197,6 @@ router.patch('/product/:id',upload.single('file'),async ( req ,res, next) => {
 
     // console.log(ew) ;
    
-
 })
 
 router.get('/product',async ( req, res ,next) => {

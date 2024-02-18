@@ -1,31 +1,23 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-export const authUserApi = createApi({
-  reducerPath: 'authUserApi',
+export const userApi = createApi({
+  reducerPath: 'userApi',
   baseQuery: fetchBaseQuery({ baseUrl: '/api/' }),
   endpoints: (builder) => ({
     authUser: builder.query({
       query: () => `/user`,
     }),
-  }),
+    getUser: builder.query({
+      query: () => '/users'
+    }),
+    getOrder: builder.query({
+      query: () => '/orders'
+    }),
+    getHistory: builder.query({
+      query: () => '/history'
+    })
+  })
 })
 
-export const getUserApi = createApi({
-  reducerPath: 'getUserApi',
-  baseQuery: fetchBaseQuery({
-    baseUrl : '/api/', 
-  }) ,
-  endpoints: (builder) => (
-    {
-      getUser : builder.query(
-        {
-          query: () => '/users'
-        }
-      )
-    }
-  )
-})
+export const { useAuthUserQuery , useGetUserQuery , useGetOrderQuery , useGetHistoryQuery } = userApi ;
 
-
-export const { useAuthUserQuery } = authUserApi
-export const { useGetUserQuery } = getUserApi
