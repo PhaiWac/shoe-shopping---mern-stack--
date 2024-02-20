@@ -70,10 +70,10 @@ function Products() {
     return (
         <>
             <div className="mt-12 container mx-auto p-5">
-                <div className="flex flex-wrap justify-center md:justify-start gap-5">
+                <div className="flex flex-wrap justify-between ">
                     {data.map((items) => (
                         <React.Fragment key={items._id} >
-                            <div className="card bg-base-100 shadow-2xl w-full md:w-[14rem] xl:w-64 ">
+                            <div className="card bg-base-100 shadow-2xl w-60  mb-5 md:w-[14rem] xl:w-72 ">
                                 <figure><img src={`/image/${items.img}`} alt="Shoes" className='w-full' /></figure>
                                 <div className="card-body">
                                     <h2 className="card-title font-bold">
@@ -82,7 +82,7 @@ function Products() {
                                     </h2>
                                     <p>{items.description}</p>
                                     <div className="card-actions justify-end">
-                                        <div className="badge badge-outline">{items.name.includes('converse') ? 'Converse' : 'Nike'}</div>
+                                        <div className="badge badge-outline">{items.name.includes('Converse') ? 'Converse' : 'Nike'}</div>
 
                                     </div>
                                     <BuyComponent id = {items._id} />

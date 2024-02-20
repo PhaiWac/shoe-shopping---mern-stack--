@@ -12,6 +12,13 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(cookieParser()) ;
+  
+app.use(session({
+    secret: 'Project',
+    resave: false,
+    saveUninitialized: true,
+    // cookie: { secure: true }
+}))
 
 app.use(async (req,res,next) => {
     const uri = 'mongodb+srv://phai:123@endproject.pmadhqg.mongodb.net/project';

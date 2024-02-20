@@ -71,10 +71,6 @@ function ModalEditProfile({id , data}) {
                 <div className="modal-box">
                     <form onSubmit={handleSubmit} className='gap-5 grid'>
                         <label className="input input-bordered flex items-center gap-2">
-                            อีเมล
-                            <input type="email" name='email' value={value.email} className="grow" onChange={handleChange} />
-                        </label>
-                        <label className="input input-bordered flex items-center gap-2">
                             ชื่อผู้ใช้
                             <input type="text" className="grow" name='username' value={value.username} onChange={handleChange} />
                         </label>

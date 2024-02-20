@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Icon } from '@iconify-icon/react';
 
 import { useSelector, useDispatch } from 'react-redux'
-import { setUsing, setUserData } from '../libs/navbarSlice';
+import { setUsing, setUserData , setToast } from '../libs/navbarSlice';
 import axios from 'axios';
 import ModalEditProfile from './MdalEditProfile';
 
@@ -55,6 +55,7 @@ function Navbar() {
         <>
 
             <p className='text-center bg-primary text-white font-bold p-3'>ร้านขายรองเท้า !!</p>
+            {/* <button className="btn" onClick={test}>TEst</button> */}
             <div className="w-full shadow-xl bg-base-100 p-3">
                 <div className="container mx-auto flex justify-between">
                     <p className="text-2xl font-bold my-auto text-primary">SHOESHOP</p>
@@ -68,7 +69,7 @@ function Navbar() {
                                 <li><Link>Nike</Link></li>
                             </ul> */}
                         </li>
-                        <li><Link className='btn btn-ghost font-normal '>Top Up</Link></li>
+                        {/* <li><Link className='btn btn-ghost font-normal '>Top Up</Link></li> */}
                         {/* <li><Link className='btn btn-ghost font-normal'>Contact</Link></li> */}
                     </ul>
 
@@ -79,27 +80,39 @@ function Navbar() {
                         {navbar.userdata ? (
                             <>
                                 <ModalEditProfile id={navbar.userdata._id} data={navbar.userdata} />
-                                <div className="indicator">
-                                    <span className='indicator-item badge p-3'>{navbar.userdata.orders.length}</span>
-                                    <Link to={'/shopping'} className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></Link>
-                                </div>
+                                {navbar.userdata.email != 'admin@gmail.com' ? (
+                                    <>
+                                        <div className="indicator">
+                                            <span className='indicator-item badge p-3'>{navbar.userdata.orders.length}</span>
+                                            <Link to={'/shopping'} className="btn btn-ghost text-xl"><Icon icon="icon-park-outline:shopping" /></Link>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+
+                                    </>
+                                )}
                                 <div className="tooltip dropdown dropdown-end  dropdown-hover" data-tip={navbar.userdata.email}>
                                     <button tabIndex={1} className="btn btn-ghost text-2xl" >
                                         <Icon icon="iconamoon:profile-circle-fill" />
                                     </button>
                                     <ul tabIndex={1} className="dropdown-content z-[1] menu p-2 bg-base-100 rounded-box w-52 shadow">
-                                        {navbar.userdata && navbar.userdata.email == "admin@gmail.com" && (
+                                        {navbar.userdata.email == "admin@gmail.com" ? (
                                             <>
                                                 <li><Link to={'/admin'}>จัดการเว็ปไซต์</Link></li>
                                             </>
+                                        ) : (
+                                            <>
+                                                <li>
+                                                    <label htmlFor={navbar.userdata._id} >
+                                                        ข้อมูลส่วนตัว
+                                                    </label>
+                                                </li>
+                                                <li><Link to={'/history'}>ประวัติการซื้อ</Link></li>
+                                                <li><Link to={'/topup'}>เติมเงิน</Link></li>
+                                            </>
                                         )}
-                                        <li>
-                                            <label htmlFor={navbar.userdata._id} >
-                                                ข้อมูลส่วนตัว
-                                            </label>
-                                        </li>
-                                        <li><Link to={'/history'}>ประวัติการซื้อ</Link></li>
-                                        {/* <li><Link>เติมเงิน</Link></li> */}
+
                                         <li><button onClick={Logout}>ออกจากระบบ</button></li>
                                     </ul>
                                 </div>
@@ -141,11 +154,16 @@ function Navbar() {
 
                                 {navbar.userdata != null && (
                                     <>
-                                        <li onClick={Update} className={usePath == '/shopping' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/shopping'}>ตระกร้า</Link></li>
-                                        <li onClick={Update} className={usePath == '/history' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/history'}>ประวัติการซื้อ</Link></li>
-                                        <li onClick={Update} className={usePath == '/editprofile' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/editprofile'}>ข้อมูลส่วนตัว</Link></li>
-                                        {navbar.userdata.email == 'admin@gmail.com' && (
+
+                                        {navbar.userdata.email == 'admin@gmail.com' ? (
                                             <li onClick={Update} className={usePath == '/admin' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/admin'}>จัดการเว็ปไซต์</Link></li>
+                                        ) : (
+                                            <>
+                                                <li onClick={Update} className={usePath == '/topup' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/topup'}>เติมเงิน</Link></li>
+                                                <li onClick={Update} className={usePath == '/shopping' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/shopping'}>ตระกร้า</Link></li>
+                                                <li onClick={Update} className={usePath == '/history' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/history'}>ประวัติการซื้อ</Link></li>
+                                                <li onClick={Update} className={usePath == '/editprofile' ? 'text-xl text-primary font-bold' : 'text-xl '} ><Link to={'/editprofile'}>ข้อมูลส่วนตัว</Link></li>
+                                            </>
                                         )}
                                         <li>
                                             <button className="text-xl" onClick={SetTheme}>

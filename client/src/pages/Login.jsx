@@ -45,7 +45,7 @@ function Login() {
     return (
         <>
             <div className="mt-24 mx-auto">
-                <div className="shadow-lg bg-base-100 rounded-lg  p-10 md:p-20 grid grid-cols-1 gap-5 md:w-fit">
+                <div className="shadow-lg bg-base-100 rounded-lg mx-auto  p-10 md:p-20 grid grid-cols-1 gap-5 md:w-fit">
 
                     <h1 className="text-2xl text-center md:text-4xl font-bold text-primary">
                         Login to your account

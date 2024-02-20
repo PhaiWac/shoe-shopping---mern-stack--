@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux';
+import { usePermissionQuery } from '../service/useapi';
 
 function Adminpanel() {
     const List = [
@@ -8,6 +9,17 @@ function Adminpanel() {
         { name: 'จัดการสินค้า', link: '/product' },
     ]
 
+    const {data , isLoading} = usePermissionQuery() ;
+
+    const navigate = useNavigate() ;
+    useEffect(() => {
+        if (data == 'none' || data == 'user') {
+            navigate('/home')
+        }
+    },[data]) ;
+
+    if (isLoading) return ;
+    
     // const navbar = useSelector((state) => state.navbar);
 
     // const native = useNavigate()

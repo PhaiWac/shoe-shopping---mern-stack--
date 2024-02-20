@@ -15,9 +15,12 @@ export const userApi = createApi({
     }),
     getHistory: builder.query({
       query: () => '/history'
+    }),
+    Permission: builder.query({
+      query: () => '/permission'
     })
   })
 })
 
-export const { useAuthUserQuery , useGetUserQuery , useGetOrderQuery , useGetHistoryQuery } = userApi ;
+export const { useAuthUserQuery , useGetUserQuery , useGetOrderQuery , useGetHistoryQuery , usePermissionQuery } = userApi ;
 

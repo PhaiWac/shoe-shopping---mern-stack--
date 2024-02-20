@@ -22,6 +22,7 @@ import Users from './pages/Users';
 import Shopping from './pages/Shopping';
 import History from './pages/History';
 import Editprofile from './pages/Editprofile';
+import Topup from './pages/Topup';
 
 function App() {
 
@@ -39,19 +40,7 @@ function App() {
   return (
     <>
       <Navbar/>
-      <ToastContainer
-        position="top-right"
-        autoClose={5000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-        theme= {document.querySelector('html').getAttribute('data-theme')}
-        transition= 'Bounce'
-        /><ToastContainer />
+
       <Routes>
         <Route path='/' element = {<Home/>} />
         <Route path='/login' element = {<Login/>} />
@@ -60,6 +49,7 @@ function App() {
         <Route path='/shopping' element = {<Shopping/>}/>
         <Route path='/history' element = {<History/>}/>
         <Route path='/editprofile' element = {<Editprofile/>}/>
+        <Route path='/topup' element = {<Topup/>}/>
         
 
 

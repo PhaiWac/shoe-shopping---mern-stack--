@@ -75,7 +75,7 @@ function ModalEditProduct({id , data}) {
                             <input type="text" className="grow" value={value.description} name='description' onChange={handleChange} />
                         </label>
                         <input type="file" className="grow file-input file-input-bordered" value={file_val} name='file' onChange={handleChange} />
-                        <button className="btn btn-primary">เพิ่มสินค้า</button>
+                        <button className="btn btn-primary">แก้ไขสินค้า</button>
                     </form>
                     <div className="modal-action">
                         <label htmlFor= {id} className="btn">ยกเลิก</label>
