@@ -9,6 +9,8 @@ function Datatable() {
 
     const [Total, setTotal] = useState(0);
 
+    const [alert,setAlert] = useState(null) ;
+
     useEffect(() => {
         refetch()
     }, [])
@@ -31,7 +33,7 @@ function Datatable() {
                     .then(res => {
                         if (res.status == 200) {
                             refetch()
-                        }
+                        } 
                     })
 
             }
@@ -41,11 +43,14 @@ function Datatable() {
     }
 
     const handleBuy = async () => {
+        setAlert(null)
         try {
             await axios.post('/api/orders', {
                 total : Total
             }).then(res => {
-                console.log('fetch')
+                if (res.status === 207) {
+                    setAlert(res.data.message)
+                }
                 refetch()
             })
         } catch (err) {
@@ -60,6 +65,9 @@ function Datatable() {
     return (
         <>
             <div className="container mx-auto mt-12 shadow-lg rounded-xl p-5">
+                {alert && (
+                    <p className="alert w-fit mx-auto mt-5">{alert}</p>
+                )}
                 <div className="flex justify-between">
                     <h2 className='font-bold my-auto text-2xl'>{Total} บาท</h2>
                     <button className="btn btn-primary my-5 " onClick={handleBuy}>สั่งซื้อ</button>

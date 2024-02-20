@@ -70,7 +70,7 @@ function Products() {
     return (
         <>
             <div className="mt-12 container mx-auto p-5">
-                <div className="flex flex-wrap justify-between ">
+                <div className="flex flex-wrap justify-between md:justify-start md:gap-3">
                     {data.map((items) => (
                         <React.Fragment key={items._id} >
                             <div className="card bg-base-100 shadow-2xl w-60  mb-5 md:w-[14rem] xl:w-72 ">

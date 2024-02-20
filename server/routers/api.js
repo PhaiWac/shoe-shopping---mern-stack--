@@ -12,6 +12,7 @@ const { ObjectId } = require('mongodb');
 
 // Premission 
 router.get('/permission',(req,res,next) => {
+    console.log(req.session)
     if (!req.session.userid ) {
         return res.json('none');
     }
@@ -51,7 +52,7 @@ router.post('/orders',async (req , res, next) => {
     const { orders , _id , cost , history} = req.session.userdata ;
     const { total } = req.body; 
 
-    if (total <= 0 || total > cost) return res.status(207).json()
+    if (total <= 0 || total > cost) return res.status(207).json({message : 'ยอดเงินของคุณ หรือ สินค้า ไม่เพียงพอ'})
 
     let update = history ;
     
@@ -320,9 +321,9 @@ router.patch('/user/:id',async ( req, res ,next) => {
         console.log(req.session.userid)
     }
     
-    // await User.findByIdAndUpdate(id,req.body) ;
+    await User.findByIdAndUpdate(id,req.body) ;
     
-    // res.status(201).json() ;
+    res.status(201).json() ;
 
     next() ;
 })

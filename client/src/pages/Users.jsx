@@ -10,8 +10,10 @@ function Users() {
 
   const navigate = useNavigate() ;
   useEffect(() => {
-      if (data == 'none' || data == 'user') {
+      if (data) {
+        if (data == 'none' || data == 'user') {
           navigate('/home')
+      }
       }
   },[data]) ;
 

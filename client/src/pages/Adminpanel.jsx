@@ -13,8 +13,10 @@ function Adminpanel() {
 
     const navigate = useNavigate() ;
     useEffect(() => {
-        if (data == 'none' || data == 'user') {
-            navigate('/home')
+        if (data) {
+            if (data == 'none' || data == 'user') {
+                navigate('/home')
+            }
         }
     },[data]) ;
 

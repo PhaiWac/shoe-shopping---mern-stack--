@@ -10,9 +10,11 @@ function Product() {
 
   const navigate = useNavigate() ;
   useEffect(() => {
-      if (data == 'none' || data == 'user') {
-          navigate('/home')
-      }
+    if (data) {
+        if (data == 'none' || data == 'user') {
+            navigate('/home')
+        }
+    }
   },[data]) ;
 
   if (isLoading) return ;

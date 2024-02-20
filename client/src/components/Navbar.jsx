@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link , useNavigate} from 'react-router-dom'
 import { Icon } from '@iconify-icon/react';
 
 import { useSelector, useDispatch } from 'react-redux'
@@ -14,6 +14,8 @@ function Navbar() {
 
     const [usePath, setPath] = useState('/');
     const [theme, setTheme] = useState('');
+
+    const navigate = useNavigate()
 
     // const navigate = useNavigate();
 
@@ -49,6 +51,7 @@ function Navbar() {
     const Logout = useCallback(async () => {
         await axios.post('/api/logout')
         dispatch(setUserData(null))
+        navigate('/login')
     }, [])
 
     return (
@@ -109,7 +112,7 @@ function Navbar() {
                                                     </label>
                                                 </li>
                                                 <li><Link to={'/history'}>ประวัติการซื้อ</Link></li>
-                                                <li><Link to={'/topup'}>เติมเงิน</Link></li>
+                                                <li><Link to={'/topup'}>เติมเงิน : {navbar.userdata.cost} $</Link></li>
                                             </>
                                         )}
 
